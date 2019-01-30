@@ -25,15 +25,19 @@ public class TddShopApplicationTests {
 	public void initTest() {
 		MockitoAnnotations.initMocks(this);
 
+		
+		Category c = new Category();
+		c.setId(1L);
+		c.setTitle("testCategory");
+		
+		
 		Product p = new Product();
 		p.setId(1L);
 		p.setTitle("testProductTitle");
 		p.setPrice(new BigDecimal("115.37"));
+		p.setCategory(c);
 
-
-		Category c = new Category();
-		c.setId(1L);
-		c.setTitle("testCategory");
+		
 	}
 
 }

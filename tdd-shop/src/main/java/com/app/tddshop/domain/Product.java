@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,10 @@ public class Product {
 
 	@Column(name = "PRICE")
 	private BigDecimal price;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CATEGORY_ID" , referencedColumnName ="ID")
+	private Category category;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -34,6 +41,10 @@ public class Product {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }
