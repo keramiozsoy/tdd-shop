@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.app.tddshop.domain.Product;
+import com.app.tddshop.domain.Campaign;
 import com.app.tddshop.domain.Category;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +37,11 @@ public class TddShopApplicationTests {
 		p.setTitle("testProductTitle");
 		p.setPrice(new BigDecimal("115.37"));
 		p.setCategory(c);
-
+		
+		Campaign campaign = new Campaign(); 
+		campaign.setId(1L);
+		campaign.setTitle("Kampanya 1");
+		campaign.setDiscountAmount(new BigDecimal("10.0"));
 		
 	}
 
