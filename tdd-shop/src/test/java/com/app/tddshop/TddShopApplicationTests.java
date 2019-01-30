@@ -29,7 +29,7 @@ public class TddShopApplicationTests {
 		
 		Category c = new Category();
 		c.setId(1L);
-		c.setTitle("testCategory");
+		c.setTitle("testCategoryTitle");
 		
 		
 		Product p = new Product();

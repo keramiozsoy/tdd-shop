@@ -10,4 +10,5 @@ foreign key (CATEGORY_ID)
 references CATEGORY (ID); 
 
 
-insert into  PRODUCT (id,title,price) VALUES (2,'testProductTitle2',1);
+insert into  PRODUCT (id,title,price,category_id) VALUES (2,'testProductTitle2',10.15,1);
+

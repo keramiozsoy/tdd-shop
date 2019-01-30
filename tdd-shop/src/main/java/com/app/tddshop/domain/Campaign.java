@@ -24,6 +24,7 @@ public class Campaign {
 	@Column(name = "DISCOUNT_AMOUNT")
 	private BigDecimal discountAmount;
 	
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
