@@ -12,3 +12,8 @@ references CATEGORY (ID);
 
 insert into  PRODUCT (id,title,price,category_id) VALUES (2,'testProductTitle2',10.15,1);
 
+alter table CATEGORY
+add constraint FK_CAMPAING
+foreign key (CAMPAING_ID)
+references CAMPAIGN(ID);
+
