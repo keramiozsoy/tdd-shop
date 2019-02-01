@@ -60,7 +60,7 @@ public class ShoppingCartTest {
 		shoppingCart.add(product);
 		Assert.assertEquals("Liste bir eleman dönmedi", 1, cartList.size());
 	}
-	
+
 	@Test
 	public void t6_cart_list_after_adding_two_product() {
 		shoppingCart.add(product);
