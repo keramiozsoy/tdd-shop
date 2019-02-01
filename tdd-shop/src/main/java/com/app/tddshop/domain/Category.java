@@ -22,7 +22,7 @@ public class Category {
 	@Column(name = "TITLE")
 	private String title;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
 	@JoinColumn(name = "CAMPAING_ID", referencedColumnName = "ID")
 	private Campaign campaing;
 
@@ -36,6 +36,18 @@ public class Category {
 
 	public void setCampaing(Campaign campaing) {
 		this.campaing = campaing;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Campaign getCampaing() {
+		return campaing;
 	}
 
 }

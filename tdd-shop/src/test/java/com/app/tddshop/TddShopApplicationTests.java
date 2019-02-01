@@ -1,48 +1,47 @@
 package com.app.tddshop;
 
-import java.math.BigDecimal;
-
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-import com.app.tddshop.domain.Product;
-import com.app.tddshop.domain.Campaign;
-import com.app.tddshop.domain.Category;
+import com.app.tddshop.test.ProductBusinessServiceTestUnit;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(Suite.class)
+@SuiteClasses({ ProductBusinessServiceTestUnit.class })
 public class TddShopApplicationTests {
 
-	@Test
-	public void contextLoads() {
-		TddShopApplication.main(new String[] {});
-	}
-
-	@Before
-	public void initTest() {
-		MockitoAnnotations.initMocks(this);
-
-		
-		Category c = new Category();
-		c.setId(1L);
-		c.setTitle("testCategoryTitle");
-		
-		
-		Product p = new Product();
-		p.setId(1L);
-		p.setTitle("testProductTitle");
-		p.setPrice(new BigDecimal("115.37"));
-		p.setCategory(c);
-		
-		Campaign campaign = new Campaign(); 
-		campaign.setId(1L);
-		campaign.setTitle("Kampanya 1");
-		campaign.setDiscountAmount(new BigDecimal("10.0"));
-		
-	}
-
 }
+
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class TddShopApplicationTests {
+//
+//	@Test
+//	public void contextLoads() {
+//		TddShopApplication.main(new String[] {});
+//	}
+//
+//	@Before
+//	public void initTest() {
+//		MockitoAnnotations.initMocks(this);
+//		
+//		
+//		Campaign campaign = new Campaign(); 
+//		campaign.setId(1L);
+//		campaign.setTitle("Kampanya 1");
+//		campaign.setDiscountAmount(new BigDecimal("10.0"));
+//		
+//		Category category = new Category();
+//		category.setId(1L);
+//		category.setTitle("testCategoryTitle");
+//		category.setCampaing(campaign);
+//		
+//		Product p = new Product();
+//		p.setId(1L);
+//		p.setTitle("testProductTitle");
+//		p.setPrice(new BigDecimal("115.37"));
+//		p.setCategory(category);
+//		
+//	}
+//
+//}

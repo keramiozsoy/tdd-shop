@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
+public class Product{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +26,9 @@ public class Product {
 
 	@Column(name = "PRICE")
 	private BigDecimal price;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY_ID" , referencedColumnName ="ID")
+
+	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
+	@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
 	private Category category;
 
 	public void setId(Long id) {
@@ -45,6 +45,22 @@ public class Product {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public Category getCategory() {
+		return category;
 	}
 
 }
