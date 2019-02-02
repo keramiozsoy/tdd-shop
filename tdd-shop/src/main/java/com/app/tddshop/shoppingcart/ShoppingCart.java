@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import com.app.tddshop.domain.Category;
 import com.app.tddshop.domain.Product;
@@ -65,7 +66,6 @@ public class ShoppingCart {
 	}
 
 	public Map<Category, Integer> countFrequencies(List<Product> shoppingCartList) {
-		
 		List<Category> shoppingCartCategoryList = new ArrayList<>();
 		for (Product product : shoppingCartList) {
 			shoppingCartCategoryList.add(product.getCategory());
@@ -78,15 +78,17 @@ public class ShoppingCart {
 		}
 		
 		return countMap;
-//		Map<Product, Integer> countMap = new HashMap<>();
-//
-//		Set<Product> pList = new HashSet<Product>(shoppingCartList);
-//		for (Product p : pList) {
-//			// System.out.println(p + ": " + Collections.frequency(shoppingCartList, p));
-//
-//			countMap.put(p, Collections.frequency(shoppingCartList, p));
-//		}
-//		return countMap;
+	}
+	
+	public boolean hasSameCategoryInFrequencies (Map<Category, Integer> resultFrequencies){
+		boolean result = true;
+		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
+			Integer frequency = resultFrequencies.get(item.getKey());
+			if (frequency.intValue() <= 2) {
+				result=false;
+			}
+		}
+		return result;
 	}
 
 }

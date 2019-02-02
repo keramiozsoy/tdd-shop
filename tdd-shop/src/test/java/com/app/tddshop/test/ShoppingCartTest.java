@@ -204,7 +204,7 @@ public class ShoppingCartTest {
 		Assert.assertNotEquals("Kategorisi olmayan ürün sepete eklenemez", Boolean.TRUE,
 				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
 	}
-	
+
 	/**
 	 * Aynı ürün iki kez eklenirse aynı kategoride iki eleman olduğundan frekansı 2
 	 * olmalıdır.
@@ -221,10 +221,10 @@ public class ShoppingCartTest {
 		Integer frequency = resultFrequencies.get(category);
 		Assert.assertEquals("Sepette aynı kategoriye sahip iki ürün yoktur.", 2, frequency, 0);
 	}
-	
+
 	/**
-	 * Farklı kategorideki ürünler bir kez eklenirse aynı kategoride iki eleman oldmadığından frekansı 1
-	 * olmalıdır.
+	 * Farklı kategorideki ürünler bir kez eklenirse aynı kategoride iki eleman
+	 * oldmadığından frekansı 1 olmalıdır.
 	 */
 	@Test
 	public void t19_when_adding_two_different_cateogry_product_should_frequency_one() {
@@ -236,18 +236,10 @@ public class ShoppingCartTest {
 		shoppingCart.add(product2);
 
 		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
-		Integer frequency = null;
-		Integer temp = null;
-		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
-			temp = resultFrequencies.get(item.getKey());
-			if(temp < 2) {
-				frequency = resultFrequencies.get(item.getKey());
-			}else {
-				frequency = temp;
-			}
-		}
 
-		Assert.assertEquals("Sepette aynı kategoriye sahip ürün vardır", 1, frequency, 0);
+		boolean result = shoppingCart.hasSameCategoryInFrequencies(resultFrequencies);
+
+		Assert.assertFalse("Sepette aynı kategoriye sahip ürün vardır", result);
 	}
 
 }
