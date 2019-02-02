@@ -41,4 +41,8 @@ public class ShoppingCart {
 		return price.isPresent();
 	}
 
+	public double getTotalAmountAfterDiscount() {
+		return 0; 
+	}
+
 }

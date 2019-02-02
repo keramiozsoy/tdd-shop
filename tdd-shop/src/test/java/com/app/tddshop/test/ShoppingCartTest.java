@@ -21,7 +21,7 @@ public class ShoppingCartTest {
 
 	private ShoppingCart shoppingCart = null;
 	private Product product, product2 = null;
-	private Double productPrice, productPrice2 = null;
+	private Double zeroPrice, productPrice, productPrice2 = null;
 	private List<Product> cartList = null;
 
 	@Before
@@ -29,6 +29,7 @@ public class ShoppingCartTest {
 		shoppingCart = new ShoppingCart();
 		product = new Product();
 		product2 = new Product();
+		zeroPrice = new Double("0.0");
 		productPrice = new Double("5.5");
 		productPrice2 = new Double("4.1");
 		cartList = shoppingCart.getCartList();
@@ -130,7 +131,7 @@ public class ShoppingCartTest {
 
 	/** Ürün fiyatı yok ise sepete eklenemez */
 	@Test
-	public void t11_when_product_has_not_price_shoul_not_add_shopping_cart() {
+	public void t11_when_product_has_not_price_should_not_add_shopping_cart() {
 		Assert.assertFalse("Sepete fiyat bilgisi olmayan ürün eklenemez", shoppingCart.checkRequiredInfoForAddingProduct(product));
 	}
 
@@ -143,6 +144,26 @@ public class ShoppingCartTest {
 		shoppingCart.add(product);
 		Assert.assertNotEquals("Ürün fiyatı yok ve sepete ürün eklenmiş durumu oluştu", Boolean.TRUE,
 				shoppingCart.checkRequiredInfoForAddingProduct(product));
+	}
+
+	/**
+	 * Sepete eklenen ürün yok ise sepet toplam tutarına indirim yapılmaz.
+	 */
+	@Test
+	public void t13_when_product_is_null_total_should_zero_total_amount_after_discount() {
+		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
+				shoppingCart.getTotalAmountAfterDiscount(), 0);
+	}
+
+	/**
+	 * Sepete bir ürün eklendiğinde sepet toplam tutarına indirim yapılmaz.
+	 */
+	@Test
+	public void t14_when_adding_one_product_should_zero_total_amount_after_discount() {
+		product.setPrice(productPrice);
+		shoppingCart.add(product);
+		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
+				shoppingCart.getTotalAmountAfterDiscount(), 0);
 	}
 
 }
