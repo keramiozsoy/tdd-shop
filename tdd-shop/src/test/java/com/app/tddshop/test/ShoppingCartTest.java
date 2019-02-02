@@ -225,10 +225,10 @@ public class ShoppingCartTest {
 
 	/**
 	 * Farklı kategorideki ürünler bir kez eklenirse aynı kategoride iki eleman
-	 * oldmadığından frekansı 1 olmalıdır.
+	 * oldmadığından frekansı 2 den küçük olmalıdır.
 	 */
 	@Test
-	public void t19_when_adding_two_different_cateogry_product_should_frequency_one() {
+	public void t19_when_adding_two_different_cateogry_product_should_frequency_less_than_two() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
 		product2.setCategory(category2);
