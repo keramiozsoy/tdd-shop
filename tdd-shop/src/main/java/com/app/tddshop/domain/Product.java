@@ -1,6 +1,5 @@
 package com.app.tddshop.domain;
 
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +24,7 @@ public class Product{
 	private String title;
 
 	@Column(name = "PRICE")
-	private BigDecimal price;
+	private Double price;
 
 	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
@@ -39,7 +38,7 @@ public class Product{
 		this.title = title;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -55,7 +54,7 @@ public class Product{
 		return id;
 	}
 
-	public BigDecimal getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 

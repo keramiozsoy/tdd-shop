@@ -55,7 +55,7 @@ public class ProductBusinessServiceTestUnit {
 		product = new Product();
 		product.setId(1L);
 		product.setTitle("testProductTitle");
-		product.setPrice(new BigDecimal("115.37"));
+		product.setPrice(new Double("115.37"));
 		product.setCategory(category);
 
 		productList = new ArrayList<>();

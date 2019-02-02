@@ -7,7 +7,7 @@ import com.app.tddshop.domain.Product;
 
 public class ShoppingCart {
 
-	private List<Product> cartList = new ArrayList<>(); // static - yeni referans obje referans almasın
+	private List<Product> cartList = new ArrayList<>();
 
 	public int size() {
 		return cartList.size();
@@ -19,6 +19,12 @@ public class ShoppingCart {
 
 	public List<Product> getCartList() {
 		return cartList;
+	}
+
+	public double getTotalAmount() {
+		double sum =cartList.stream().mapToDouble(p -> p.getPrice()).sum();
+	
+		return sum;
 	}
 
 }
