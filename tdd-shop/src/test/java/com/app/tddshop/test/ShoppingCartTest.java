@@ -1,6 +1,7 @@
 package com.app.tddshop.test;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -164,6 +165,22 @@ public class ShoppingCartTest {
 		shoppingCart.add(product);
 		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
 				shoppingCart.getTotalAmountAfterDiscount(), 0);
+	}
+
+	/**
+	 * Aynı ürün iki kez eklenirse aynı kategoride iki eleman olduğundan frekansı 2
+	 * olmalıdır.
+	 */
+	@Test
+	public void t15_when_adding_two_same_product_should_frequancy_two() {
+		product.setPrice(productPrice);
+		shoppingCart.add(product);
+		shoppingCart.add(product);
+
+		Map<Product, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
+
+		Integer frequency = resultFrequencies.get(product);
+		Assert.assertEquals("Sepette aynı kategoriye sahip iki ürün yoktur.", 2, frequency, 0);
 	}
 
 }
