@@ -64,14 +64,29 @@ public class ShoppingCart {
 		return 0;
 	}
 
-	public Map<Product, Integer> countFrequencies(List<Product> shoppingCartList) {
-		Map<Product, Integer> countMap = new HashMap<>();
-		Set<Product> pList = new HashSet<Product>(shoppingCartList);
-		for (Product p : pList) {
-			// System.out.println(p + ": " + Collections.frequency(shoppingCartList, p));
-			countMap.put(p, Collections.frequency(shoppingCartList, p));
+	public Map<Category, Integer> countFrequencies(List<Product> shoppingCartList) {
+		
+		List<Category> shoppingCartCategoryList = new ArrayList<>();
+		for (Product product : shoppingCartList) {
+			shoppingCartCategoryList.add(product.getCategory());
 		}
+		
+		
+		Map<Category, Integer> countMap = new HashMap<>();		
+		for (Category category : shoppingCartCategoryList) {
+			countMap.put(category, Collections.frequency(shoppingCartCategoryList, category));
+		}
+		
 		return countMap;
+//		Map<Product, Integer> countMap = new HashMap<>();
+//
+//		Set<Product> pList = new HashSet<Product>(shoppingCartList);
+//		for (Product p : pList) {
+//			// System.out.println(p + ": " + Collections.frequency(shoppingCartList, p));
+//
+//			countMap.put(p, Collections.frequency(shoppingCartList, p));
+//		}
+//		return countMap;
 	}
 
 }

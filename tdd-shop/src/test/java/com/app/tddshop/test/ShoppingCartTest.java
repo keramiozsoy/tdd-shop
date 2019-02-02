@@ -2,6 +2,7 @@ package com.app.tddshop.test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -209,16 +210,44 @@ public class ShoppingCartTest {
 	 * olmalıdır.
 	 */
 	@Test
-	public void t18_when_adding_two_same_product_should_frequancy_two() {
+	public void t18_when_adding_two_same_product_should_frequency_two() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		shoppingCart.add(product);
 
-		Map<Product, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
+		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
 
-		Integer frequency = resultFrequencies.get(product);
+		Integer frequency = resultFrequencies.get(category);
 		Assert.assertEquals("Sepette aynı kategoriye sahip iki ürün yoktur.", 2, frequency, 0);
+	}
+	
+	/**
+	 * Farklı kategorideki ürünler bir kez eklenirse aynı kategoride iki eleman oldmadığından frekansı 1
+	 * olmalıdır.
+	 */
+	@Test
+	public void t19_when_adding_two_different_cateogry_product_should_frequency_one() {
+		product.setCategory(category);
+		product.setPrice(productPrice);
+		product2.setCategory(category2);
+		product2.setPrice(productPrice2);
+		shoppingCart.add(product);
+		shoppingCart.add(product2);
+
+		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
+		Integer frequency = null;
+		Integer temp = null;
+		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
+			temp = resultFrequencies.get(item.getKey());
+			if(temp < 2) {
+				frequency = resultFrequencies.get(item.getKey());
+			}else {
+				frequency = temp;
+			}
+		}
+
+		Assert.assertEquals("Sepette aynı kategoriye sahip ürün vardır", 1, frequency, 0);
 	}
 
 }
