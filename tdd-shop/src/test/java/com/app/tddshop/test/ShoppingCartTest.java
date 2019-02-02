@@ -12,6 +12,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.app.tddshop.domain.Category;
 import com.app.tddshop.domain.Product;
 import com.app.tddshop.shoppingcart.ShoppingCart;
 
@@ -22,6 +23,7 @@ public class ShoppingCartTest {
 
 	private ShoppingCart shoppingCart = null;
 	private Product product, product2 = null;
+	private Category category, category2 = null;
 	private Double zeroPrice, productPrice, productPrice2 = null;
 	private List<Product> cartList = null;
 
@@ -33,6 +35,8 @@ public class ShoppingCartTest {
 		zeroPrice = new Double("0.0");
 		productPrice = new Double("5.5");
 		productPrice2 = new Double("4.1");
+		category = new Category();
+		category2 = new Category();
 		cartList = shoppingCart.getCartList();
 	}
 
@@ -45,6 +49,7 @@ public class ShoppingCartTest {
 	/** Sepette bir ürün var ise boyutu bir olmalıdır. */
 	@Test
 	public void t2_list_size_after_adding_one_product() {
+		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		Assert.assertEquals("Listenin büyüklüğü bir değildir.", 1, shoppingCart.size());
@@ -53,6 +58,8 @@ public class ShoppingCartTest {
 	/** Sepette iki ürün var ise boyutu iki olmalıdır. */
 	@Test
 	public void t3_list_size_after_adding_two_product() {
+		product.setCategory(category);
+		product2.setCategory(category2);
 		product.setPrice(productPrice);
 		product2.setPrice(productPrice2);
 		shoppingCart.add(product);
@@ -72,6 +79,7 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t5_cart_list_after_adding_one_product() {
+		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		Assert.assertEquals("Liste bir eleman dönmedi", 1, cartList.size());
@@ -83,6 +91,8 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t6_cart_list_after_adding_two_product() {
+		product.setCategory(category);
+		product2.setCategory(category2);
 		product.setPrice(productPrice);
 		product2.setPrice(productPrice2);
 		shoppingCart.add(product);
@@ -102,6 +112,7 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t8_when_adding_one_product_then_return_total_amount() {
+		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		Assert.assertEquals("Toplam tutar ürün fiyatından farklıdır.", product.getPrice(), shoppingCart.getTotalAmount(), 0);
@@ -113,6 +124,8 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t9_when_adding_two_product_then_return_total_amount() {
+		product.setCategory(category);
+		product2.setCategory(category2);
 		product.setPrice(productPrice);
 		product2.setPrice(productPrice2);
 
@@ -127,13 +140,14 @@ public class ShoppingCartTest {
 	/** Ürün bilgisi yok ise sepete eklenemez */
 	@Test
 	public void t10_when_product_is_null_should_not_add_shopping_cart() {
-		Assert.assertFalse("Ürün bilgisi yok ise sepete ekleme işlemi yapılamaz", shoppingCart.checkRequiredInfoForAddingProduct(null));
+		Assert.assertFalse("Ürün bilgisi yok ise sepete ekleme işlemi yapılamaz",
+				shoppingCart.checkRequiredPriceInfoForAddingProduct(null));
 	}
 
 	/** Ürün fiyatı yok ise sepete eklenemez */
 	@Test
 	public void t11_when_product_has_not_price_should_not_add_shopping_cart() {
-		Assert.assertFalse("Sepete fiyat bilgisi olmayan ürün eklenemez", shoppingCart.checkRequiredInfoForAddingProduct(product));
+		Assert.assertFalse("Sepete fiyat bilgisi olmayan ürün eklenemez", shoppingCart.checkRequiredPriceInfoForAddingProduct(product));
 	}
 
 	/**
@@ -141,10 +155,9 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t12_when_product_has_not_price_should_empty_shopping_cart() {
-		// product.setPrice(productPrice);
 		shoppingCart.add(product);
-		Assert.assertNotEquals("Ürün fiyatı yok ve sepete ürün eklenmiş durumu oluştu", Boolean.TRUE,
-				shoppingCart.checkRequiredInfoForAddingProduct(product));
+		Assert.assertNotEquals("Fiyatı olmayan ürün sepete eklenemez", Boolean.TRUE,
+				shoppingCart.checkRequiredPriceInfoForAddingProduct(product));
 	}
 
 	/**
@@ -167,12 +180,37 @@ public class ShoppingCartTest {
 				shoppingCart.getTotalAmountAfterDiscount(), 0);
 	}
 
+	/** Kategori kategori yok ise sepete eklenemez */
+	@Test
+	public void t15_when_product_category_null_should_not_add_shopping_cart() {
+		Assert.assertFalse("Kategori bilgisi yok ise sepete ekleme işlemi yapılamaz",
+				shoppingCart.checkRequiredCategoryInfoForAddingProduct(null));
+	}
+
+	/** Ürün kategori yok ise sepete eklenemez */
+	@Test
+	public void t16_when_product_has_not_category_should_not_add_shopping_cart() {
+		Assert.assertFalse("Sepete kategori bilgisi olmayan ürün eklenemez",
+				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
+	}
+
+	/**
+	 * Kategori yok ve ürün sepete eklenmeye çalışılmış ise sepet boş olmalıdır.
+	 */
+	@Test
+	public void t17_when_product_has_not_category_should_empty_shopping_cart() {
+		shoppingCart.add(product);
+		Assert.assertNotEquals("Kategorisi olmayan ürün sepete eklenemez", Boolean.TRUE,
+				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
+	}
+	
 	/**
 	 * Aynı ürün iki kez eklenirse aynı kategoride iki eleman olduğundan frekansı 2
 	 * olmalıdır.
 	 */
 	@Test
-	public void t15_when_adding_two_same_product_should_frequancy_two() {
+	public void t18_when_adding_two_same_product_should_frequancy_two() {
+		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		shoppingCart.add(product);
