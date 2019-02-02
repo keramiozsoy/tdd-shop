@@ -218,8 +218,9 @@ public class ShoppingCartTest {
 
 		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
 
-		Integer frequency = resultFrequencies.get(category);
-		Assert.assertEquals("Sepette aynı kategoriye sahip iki ürün yoktur.", 2, frequency, 0);
+		boolean result = shoppingCart.hasSameCategoryInFrequencies(resultFrequencies);
+		
+		Assert.assertTrue("Sepette aynı kategoriye sahip  ürün yoktur.", result);
 	}
 
 	/**

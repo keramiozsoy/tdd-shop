@@ -84,7 +84,7 @@ public class ShoppingCart {
 		boolean result = true;
 		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
 			Integer frequency = resultFrequencies.get(item.getKey());
-			if (frequency.intValue() <= 2) {
+			if (frequency.intValue() < 2) {
 				result=false;
 			}
 		}
