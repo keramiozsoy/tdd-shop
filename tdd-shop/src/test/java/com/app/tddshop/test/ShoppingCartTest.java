@@ -1,6 +1,5 @@
 package com.app.tddshop.test;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Assert;
@@ -21,8 +20,8 @@ import com.app.tddshop.shoppingcart.ShoppingCart;
 public class ShoppingCartTest {
 
 	private ShoppingCart shoppingCart = null;
-	private Product product = null;
-	private Product product2 = null;
+	private Product product, product2 = null;
+	private Double productPrice, productPrice2 = null;
 	private List<Product> cartList = null;
 
 	@Before
@@ -30,6 +29,8 @@ public class ShoppingCartTest {
 		shoppingCart = new ShoppingCart();
 		product = new Product();
 		product2 = new Product();
+		productPrice = new Double("5.5");
+		productPrice2 = new Double("4.1");
 		cartList = shoppingCart.getCartList();
 	}
 
@@ -42,6 +43,7 @@ public class ShoppingCartTest {
 	/** Sepette bir ürün var ise boyutu bir olmalıdır. */
 	@Test
 	public void t2_list_size_after_adding_one_product() {
+		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		Assert.assertEquals("Listenin büyüklüğü bir değildir.", 1, shoppingCart.size());
 	}
@@ -49,6 +51,8 @@ public class ShoppingCartTest {
 	/** Sepette iki ürün var ise boyutu iki olmalıdır. */
 	@Test
 	public void t3_list_size_after_adding_two_product() {
+		product.setPrice(productPrice);
+		product2.setPrice(productPrice2);
 		shoppingCart.add(product);
 		shoppingCart.add(product2);
 		Assert.assertEquals("Listenin büyüklüğü iki değildir.", 2, shoppingCart.size());
@@ -66,6 +70,7 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t5_cart_list_after_adding_one_product() {
+		product.setPrice(productPrice);
 		shoppingCart.add(product);
 		Assert.assertEquals("Liste bir eleman dönmedi", 1, cartList.size());
 	}
@@ -76,6 +81,8 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t6_cart_list_after_adding_two_product() {
+		product.setPrice(productPrice);
+		product2.setPrice(productPrice2);
 		shoppingCart.add(product);
 		shoppingCart.add(product2);
 		Assert.assertEquals("Liste iki eleman dönmedi", 2, cartList.size());
@@ -93,10 +100,9 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t8_when_adding_one_product_then_return_total_amount() {
-		product.setPrice(new Double(5.5));
+		product.setPrice(productPrice);
 		shoppingCart.add(product);
-		Assert.assertEquals("Toplam tutar ürün fiyatından farklıdır.", product.getPrice(),
-				shoppingCart.getTotalAmount(), 0);
+		Assert.assertEquals("Toplam tutar ürün fiyatından farklıdır.", product.getPrice(), shoppingCart.getTotalAmount(), 0);
 	}
 
 	/**
@@ -105,16 +111,38 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t9_when_adding_two_product_then_return_total_amount() {
-		product.setPrice(new Double(5.5));
-		product2.setPrice(new Double(4.1));
+		product.setPrice(productPrice);
+		product2.setPrice(productPrice2);
 
 		Double expectedSum = product.getPrice() + product2.getPrice();
 
 		shoppingCart.add(product);
 		shoppingCart.add(product2);
 
-		Assert.assertEquals("Toplam tutar iki ürünün toplam fiyatından farklıdır", expectedSum,
-				shoppingCart.getTotalAmount(), 0);
+		Assert.assertEquals("Toplam tutar iki ürünün toplam fiyatından farklıdır", expectedSum, shoppingCart.getTotalAmount(), 0);
+	}
+
+	/** Ürün bilgisi yok ise sepete eklenemez */
+	@Test
+	public void t10_when_product_is_null_should_not_add_shopping_cart() {
+		Assert.assertFalse("Ürün bilgisi yok ise sepete ekleme işlemi yapılamaz", shoppingCart.checkRequiredInfoForAddingProduct(null));
+	}
+
+	/** Ürün fiyatı yok ise sepete eklenemez */
+	@Test
+	public void t11_when_product_has_not_price_shoul_not_add_shopping_cart() {
+		Assert.assertFalse("Sepete fiyat bilgisi olmayan ürün eklenemez", shoppingCart.checkRequiredInfoForAddingProduct(product));
+	}
+
+	/**
+	 * Ürün fiyatı yok ve ürün sepete eklenmeye çalışılmış ise sepet boş olmalıdır.
+	 */
+	@Test
+	public void t12_when_product_has_not_price_should_empty_shopping_cart() {
+		// product.setPrice(productPrice);
+		shoppingCart.add(product);
+		Assert.assertNotEquals("Ürün fiyatı yok ve sepete ürün eklenmiş durumu oluştu", Boolean.TRUE,
+				shoppingCart.checkRequiredInfoForAddingProduct(product));
 	}
 
 }

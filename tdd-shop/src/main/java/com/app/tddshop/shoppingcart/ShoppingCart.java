@@ -2,6 +2,7 @@ package com.app.tddshop.shoppingcart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.app.tddshop.domain.Product;
 
@@ -14,7 +15,9 @@ public class ShoppingCart {
 	}
 
 	public void add(Product product) {
-		cartList.add(product);
+		if (checkRequiredInfoForAddingProduct(product)) {
+			cartList.add(product);
+		}
 	}
 
 	public List<Product> getCartList() {
@@ -22,9 +25,20 @@ public class ShoppingCart {
 	}
 
 	public double getTotalAmount() {
-		double sum =cartList.stream().mapToDouble(p -> p.getPrice()).sum();
-	
+		double sum = cartList.stream().mapToDouble(p -> p.getPrice()).sum();
+
 		return sum;
+	}
+
+	public boolean checkRequiredInfoForAddingProduct(Product product) {
+		Optional<Product> productParam = Optional.ofNullable(product); // ofNullable null kabul eder exception fırlatmaz
+		Optional<Double> price = Optional.empty();
+
+		if (productParam.isPresent()) {
+			price = Optional.ofNullable(productParam.get().getPrice());
+		}
+
+		return price.isPresent();
 	}
 
 }
