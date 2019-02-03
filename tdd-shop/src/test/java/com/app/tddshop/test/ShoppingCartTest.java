@@ -248,7 +248,7 @@ public class ShoppingCartTest {
 	 * Sepete bir kategoride 3 ten fazla eklenmiş ise  %20 indirim uygulanır
 	 */
 	@Test
-	public void t20_when_adding_greater_than_three_prouduct_should_return_twenty_percent_dicount() {
+	public void t20_when_adding_greater_than_three_prouduct_should_return_twenty_percent_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product);
@@ -267,6 +267,10 @@ public class ShoppingCartTest {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product);
+		
+		product2.setPrice(productPrice2);
+		product2.setCategory(category2);
+		shoppingCart.add(product2);
 		
 		Map<Category, Integer> resultFrequenciesForGreaterThanThree = shoppingCart.countFrequencies(cartList);
 		
@@ -275,6 +279,52 @@ public class ShoppingCartTest {
 		Assert.assertFalse("Bir kategoride 3 ten fazla ürün bulunamadığından %20 indirim kampanyası uygulanamadı", resultOnlyFrequenciesForGreaterThanThree.isEmpty());
 		
 	}
+	
+	/**
+	 * Sepete bir kategoride 5 ten fazla eklenmiş ise  %50 indirim uygulanır
+	 */
+	@Test
+	public void t20_when_adding_greater_than_five_prouduct_should_return_fifty_percent_campaign_dicount() {
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product2.setPrice(productPrice2);
+		product2.setCategory(category2);
+		shoppingCart.add(product2);
+		
+		Map<Category, Integer> resultFrequenciesForGreaterThanFive = shoppingCart.countFrequencies(cartList);
+		
+		Map<Category, Integer> resultOnlyFrequenciesForGreaterThanFive = shoppingCart.hasCategoryCountGreaterThanFiveInFrequencies(resultFrequenciesForGreaterThanFive); 
+		
+		Assert.assertFalse("Bir kategoride 5 ten fazla ürün bulunamadığından %50 indirim kampanyası uygulanamadı", resultOnlyFrequenciesForGreaterThanFive.isEmpty());
+	}
+	
 
 
 }

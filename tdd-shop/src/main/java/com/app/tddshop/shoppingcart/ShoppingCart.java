@@ -92,16 +92,25 @@ public class ShoppingCart {
 	}
 	
 	
-	public Map<Category, Integer> hasCategoryCountGreaterThanThreeInFrequencies(Map<Category, Integer> resultFrequencies){
+	public Map<Category, Integer> hasCategoryCountGreaterThanThreeInFrequencies(Map<Category, Integer> resultFrequenciesForGreaterThanThree){
 		Map<Category, Integer> resultList = new HashMap<>();
-		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
-			Integer frequency = resultFrequencies.get(item.getKey());
+		for (Entry<Category, Integer> item : resultFrequenciesForGreaterThanThree.entrySet()) {
+			Integer frequency = resultFrequenciesForGreaterThanThree.get(item.getKey());
 			if(frequency > 3) {
 				resultList.put(item.getKey(),item.getValue());
 			}
 		}
 		return resultList;
-		
 	}
 
+	public Map<Category, Integer> hasCategoryCountGreaterThanFiveInFrequencies(Map<Category, Integer> resultFrequenciesForGreaterThanFive) {
+		Map<Category, Integer> resultList = new HashMap<>();
+		for (Entry<Category, Integer> item : resultFrequenciesForGreaterThanFive.entrySet()) {
+			Integer frequency = resultFrequenciesForGreaterThanFive.get(item.getKey());
+			if(frequency > 5) {
+				resultList.put(item.getKey(),item.getValue());
+			}
+		}
+		return resultList;
+	}
 }
