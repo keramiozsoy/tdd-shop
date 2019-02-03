@@ -22,6 +22,7 @@ public class Category {
 	@Column(name = "TITLE")
 	private String title;
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -37,7 +38,6 @@ public class Category {
 	public String getTitle() {
 		return title;
 	}
-
 
 
 }

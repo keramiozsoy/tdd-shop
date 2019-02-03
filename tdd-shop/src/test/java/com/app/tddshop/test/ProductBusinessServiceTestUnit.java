@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.app.tddshop.TddShopApplication;
 import com.app.tddshop.domain.Campaign;
 import com.app.tddshop.domain.Category;
 import com.app.tddshop.domain.Product;
@@ -54,18 +53,12 @@ public class ProductBusinessServiceTestUnit {
 		product = new Product();
 		product.setId(1L);
 		product.setTitle("testProductTitle");
-		product.setPrice(new Double("115.37"));
+		product.setPrice(new BigDecimal("115.37"));
 		product.setCategory(category);
-		product.setCampaing(campaign);
 
 		productList = new ArrayList<>();
 		productList.add(product);
 
-	}
-
-	@Test
-	public void contextLoads() {
-		TddShopApplication.main(new String[] {});
 	}
 
 	@Test
@@ -107,7 +100,7 @@ public class ProductBusinessServiceTestUnit {
 	}
 	
 	@Test
-	public void t2_service_when_save_then_return_product() {
+	public void t3_service_when_save_then_return_product() {
 		Mockito.when(productBusinessService.save(Mockito.any())).thenReturn(product);
 		
 		Product p = productBusinessService.save(product);
