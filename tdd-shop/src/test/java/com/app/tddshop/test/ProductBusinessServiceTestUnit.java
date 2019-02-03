@@ -50,13 +50,13 @@ public class ProductBusinessServiceTestUnit {
 		category = new Category();
 		category.setId(1L);
 		category.setTitle("testCategoryTitle");
-		category.setCampaing(campaign);
 
 		product = new Product();
 		product.setId(1L);
 		product.setTitle("testProductTitle");
 		product.setPrice(new Double("115.37"));
 		product.setCategory(category);
+		product.setCampaing(campaign);
 
 		productList = new ArrayList<>();
 		productList.add(product);

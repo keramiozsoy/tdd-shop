@@ -22,20 +22,12 @@ public class Category {
 	@Column(name = "TITLE")
 	private String title;
 
-	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
-	@JoinColumn(name = "CAMPAING_ID", referencedColumnName = "ID")
-	private Campaign campaing;
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public void setCampaing(Campaign campaing) {
-		this.campaing = campaing;
 	}
 
 	public Long getId() {
@@ -46,8 +38,6 @@ public class Category {
 		return title;
 	}
 
-	public Campaign getCampaing() {
-		return campaing;
-	}
+
 
 }

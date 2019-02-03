@@ -161,36 +161,16 @@ public class ShoppingCartTest {
 				shoppingCart.checkRequiredPriceInfoForAddingProduct(product));
 	}
 
-	/**
-	 * Sepete eklenen ürün yok ise sepet toplam tutarına indirim yapılmaz.
-	 */
-	@Test
-	public void t13_when_product_is_null_total_should_zero_total_amount_after_discount() {
-		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
-				shoppingCart.getTotalAmountAfterDiscount(), 0);
-	}
-
-	/**
-	 * Sepete bir ürün eklendiğinde sepet toplam tutarına indirim yapılmaz.
-	 */
-	@Test
-	public void t14_when_adding_one_product_should_zero_total_amount_after_discount() {
-		product.setPrice(productPrice);
-		shoppingCart.add(product);
-		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
-				shoppingCart.getTotalAmountAfterDiscount(), 0);
-	}
-
 	/** Kategori kategori yok ise sepete eklenemez */
 	@Test
-	public void t15_when_product_category_null_should_not_add_shopping_cart() {
+	public void t13_when_product_category_null_should_not_add_shopping_cart() {
 		Assert.assertFalse("Kategori bilgisi yok ise sepete ekleme işlemi yapılamaz",
 				shoppingCart.checkRequiredCategoryInfoForAddingProduct(null));
 	}
 
 	/** Ürün kategori yok ise sepete eklenemez */
 	@Test
-	public void t16_when_product_has_not_category_should_not_add_shopping_cart() {
+	public void t14_when_product_has_not_category_should_not_add_shopping_cart() {
 		Assert.assertFalse("Sepete kategori bilgisi olmayan ürün eklenemez",
 				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
 	}
@@ -199,7 +179,7 @@ public class ShoppingCartTest {
 	 * Kategori yok ve ürün sepete eklenmeye çalışılmış ise sepet boş olmalıdır.
 	 */
 	@Test
-	public void t17_when_product_has_not_category_should_empty_shopping_cart() {
+	public void t15_when_product_has_not_category_should_empty_shopping_cart() {
 		shoppingCart.add(product);
 		Assert.assertNotEquals("Kategorisi olmayan ürün sepete eklenemez", Boolean.TRUE,
 				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
@@ -210,7 +190,7 @@ public class ShoppingCartTest {
 	 * olmalıdır.
 	 */
 	@Test
-	public void t18_when_adding_two_same_product_should_frequency_two() {
+	public void t16_when_adding_two_same_product_should_frequency_two() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
 		shoppingCart.add(product);
@@ -228,7 +208,7 @@ public class ShoppingCartTest {
 	 * oldmadığından frekansı 2 den küçük olmalıdır.
 	 */
 	@Test
-	public void t19_when_adding_two_different_cateogry_product_should_frequency_less_than_two() {
+	public void t17_when_adding_two_different_cateogry_product_should_frequency_less_than_two() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
 		product2.setCategory(category2);
@@ -242,5 +222,57 @@ public class ShoppingCartTest {
 
 		Assert.assertFalse("Sepette aynı kategoriye sahip ürün vardır", result);
 	}
+	
+	/**
+	 * Sepete eklenen ürün yok ise sepet toplam tutarına indirim yapılmaz.
+	 */
+	@Test
+	public void t18_when_product_is_null_total_should_zero_total_amount_after_discount() {
+		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
+				shoppingCart.getTotalAmountAfterDiscount(), 0);
+	}
+
+	/**
+	 * Sepete bir ürün eklendiğinde sepet toplam tutarına indirim yapılmaz.
+	 */
+	@Test
+	public void t19_when_adding_one_product_should_zero_total_amount_after_discount() {
+		product.setPrice(productPrice);
+		shoppingCart.add(product);
+		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
+				shoppingCart.getTotalAmountAfterDiscount(), 0);
+	}
+	
+	
+	// bir kategoride 3 ten fazla ürün aldığından indirim uygula
+	@Test
+	public void t20() {
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		product = new Product();
+		product.setPrice(productPrice);
+		product.setCategory(category);
+		shoppingCart.add(product);
+		
+		Map<Category, Integer> resultFrequenciesForGreaterThanThree = shoppingCart.countFrequencies(cartList);
+		
+		shoppingCart.hasCategoryCountMoreThanThreeInFrequencies(resultFrequenciesForGreaterThanThree); 
+		
+		System.out.println("adsf");
+		
+	}
+
 
 }

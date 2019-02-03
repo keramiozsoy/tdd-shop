@@ -29,6 +29,10 @@ public class Product{
 	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
 	private Category category;
+	
+	@ManyToOne(fetch = FetchType.EAGER) // EAGER LAZY yapmak için mapper yapacağım
+	@JoinColumn(name = "CAMPAING_ID", referencedColumnName = "ID")
+	private Campaign campaing;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -60,6 +64,14 @@ public class Product{
 
 	public Category getCategory() {
 		return category;
+	}
+	
+	public Campaign getCampaing() {
+		return campaing;
+	}
+
+	public void setCampaing(Campaign campaing) {
+		this.campaing = campaing;
 	}
 
 }

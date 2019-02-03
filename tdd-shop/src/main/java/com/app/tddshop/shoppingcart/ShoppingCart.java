@@ -90,5 +90,18 @@ public class ShoppingCart {
 		}
 		return result;
 	}
+	
+	
+	public Map<Category, Integer> hasCategoryCountMoreThanThreeInFrequencies(Map<Category, Integer> resultFrequencies){
+		Map<Category, Integer> resultList = new HashMap<>();
+		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
+			Integer frequency = resultFrequencies.get(item.getKey());
+			if(frequency > 3) {
+				resultList.put(item.getKey(),item.getValue());
+			}
+		}
+		return resultList;
+		
+	}
 
 }
