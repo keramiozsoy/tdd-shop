@@ -2,11 +2,8 @@ package com.app.tddshop.test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.app.tddshop.TddShopApplication;
 import com.app.tddshop.domain.Category;
 import com.app.tddshop.domain.Product;
+import com.app.tddshop.shoppingcart.DeliveryCostCalculator;
 import com.app.tddshop.shoppingcart.ShoppingCart;
 
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING) // isim sırasına göre metotları çalıştır
@@ -288,7 +286,7 @@ public class ShoppingCartTest {
 	 * liste döner
 	 */
 	@Test
-	public void t20_when_adding_greater_than_five_prouduct_should_return_fifty_percent_campaign_dicount() {
+	public void t21_when_adding_greater_than_five_prouduct_should_return_fifty_percent_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product, 6);
@@ -315,7 +313,7 @@ public class ShoppingCartTest {
 	 * liste döner
 	 */
 	@Test
-	public void t21_when_adding_greater_than_one_prouduct_should_return_five_lira_campaign_dicount() {
+	public void t22_when_adding_greater_than_one_prouduct_should_return_five_lira_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product, 2);
@@ -343,7 +341,7 @@ public class ShoppingCartTest {
 	 * bir kategoride 1 den fazla ürün eklenmiş ise 5 Tl indirim uygulanacak
 	 */
 	@Test
-	public void t22_when_adding_greater_than_three_prouduct_should_return_twenty_percent_campaign_dicount() {
+	public void t23_when_adding_greater_than_three_prouduct_should_return_twenty_percent_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product, 6);
@@ -368,7 +366,7 @@ public class ShoppingCartTest {
 	 * Total tutar kupon minimum tutarından fazla ise kupon uygulanır.
 	 */
 	@Test
-	public void t23_when_total_amont_greater_than_coupon_amount_coupon_can_apply() {
+	public void t24_when_total_amont_greater_than_coupon_amount_coupon_can_apply() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product, 6);
@@ -397,7 +395,7 @@ public class ShoppingCartTest {
 	 * Total tutar kupon minimum tutarından fazla ise kupon uygulanmaz.
 	 */
 	@Test
-	public void t24_when_total_amont_greater_than_coupon_amount_coupon_can_apply() {
+	public void t25_when_total_amont_greater_than_coupon_amount_coupon_can_apply() {
 
 		product3.setPrice(productPrice3);
 		product3.setCategory(category3);
@@ -413,6 +411,88 @@ public class ShoppingCartTest {
 		
 		Assert.assertNotEquals("Toplam sepet tutarı kupon tutarıdan fazladır.",1, result,0);
 		
+	}
+	
+	/**
+	 * Total tutar kupon minimum tutarından az ise toplam kupon tutarı 0 olur.
+	 */
+	@Test
+	public void t26_when_total_amont_greater_than_coupon_amount_coupon_can_apply() {
+
+		product3.setPrice(productPrice3);
+		product3.setCategory(category3);
+		shoppingCart.add(product3, 2);
+
+		Map<Category, Integer> resultOrderedFrequenciesForApplyCampaignDiscount = shoppingCart.countFrequencies(cartList);
+
+		shoppingCart.applyDiscount(resultOrderedFrequenciesForApplyCampaignDiscount);
+		
+		shoppingCart.applyCoupon(COUPON);
+		
+		Assert.assertEquals("Total tutar kupon tutarı 0 ",zeroPrice, BigDecimal.valueOf(shoppingCart.getTotalCouponDiscount()) );
+		
+	}
+
+	/**
+	 * 2 farklı kategori 4 farklı ürün için maliyet
+	 */
+	@Test
+	public void t27_cost_delivery() {
+		product.setCategory(category);
+		product.setPrice(productPrice);
+		shoppingCart.add(product, 3);
+		
+		Product diffrentProductSameCategory = new  Product();
+		diffrentProductSameCategory.setCategory(category);
+		diffrentProductSameCategory.setPrice(productPrice);
+		shoppingCart.add(diffrentProductSameCategory, 3);
+		
+		product2.setCategory(category2);
+		product2.setPrice(productPrice2);
+		shoppingCart.add(product2, 3);
+		
+		Product diffrentProductSameCategory2 = new  Product();
+		diffrentProductSameCategory2.setCategory(category2);
+		diffrentProductSameCategory2.setPrice(productPrice2);
+		shoppingCart.add(diffrentProductSameCategory2, 3);
+		
+		
+		
+		BigDecimal costPerDelivery = new BigDecimal(BigInteger.ONE);
+		BigDecimal costPerProduct = new BigDecimal(BigInteger.ONE);
+		BigDecimal fixedCost = new BigDecimal("2.99");
+
+		DeliveryCostCalculator cc = new DeliveryCostCalculator(costPerDelivery, costPerProduct, fixedCost);
+		double result = cc.calculateFor(shoppingCart);
+		
+		
+		Assert.assertNotEquals("Maliyet yanlış hesaplanmıştır.",fixedCost,result);
+	}
+	
+	/**
+	 * print metotu
+	 */
+	@Test
+	public void t28_print() {
+		product.setCategory(category);
+		product.setPrice(productPrice);
+		shoppingCart.add(product, 3);
+		
+		Product diffrentProductSameCategory = new  Product();
+		diffrentProductSameCategory.setCategory(category);
+		diffrentProductSameCategory.setPrice(productPrice);
+		shoppingCart.add(diffrentProductSameCategory, 3);
+		
+		product2.setCategory(category2);
+		product2.setPrice(productPrice2);
+		shoppingCart.add(product2, 3);
+		
+		Product diffrentProductSameCategory2 = new  Product();
+		diffrentProductSameCategory2.setCategory(category2);
+		diffrentProductSameCategory2.setPrice(productPrice2);
+		shoppingCart.add(diffrentProductSameCategory2, 3);
+		
+		shoppingCart.print();
 	}
 
 	

@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.app.tddshop.domain.Category;
@@ -215,6 +213,39 @@ public class ShoppingCart {
 		BigDecimal realTotalAmount = new BigDecimal(getTotalAmount()).setScale(2, RoundingMode.HALF_UP);
 		BigDecimal discountAmount = realTotalAmount.multiply(new BigDecimal(percent)).setScale(2, RoundingMode.HALF_UP);
 		totalCouponDicountVal = totalCouponDicountVal.add(discountAmount);
+	}
+
+	public void print() {
+		Map<Category, Integer> rm = countFrequencies(getCartList());
+
+		for (Entry<Category, Integer> item : rm.entrySet()) {
+
+			Category key = item.getKey(); // işlem yapacağım kategori
+			Integer value = item.getValue(); // kategorideki ürün
+			List<Product> resultProducts = cartList.stream().filter(line -> key.equals(line.getCategory())).collect(Collectors.toList());
+
+			for (Product p : resultProducts) {
+				System.out.println(" Category:   " + key.getTitle() + "Product :" + p.getTitle() + "Prouduct Count : " + value
+						+ " Unit Price " + p.getPrice() + "Total Price" + p.getPrice().multiply(new BigDecimal(value)) + "");
+			}
+			
+		}
+		
+		
+
+		
+		
+		BigDecimal costPerDelivery = new BigDecimal(BigInteger.ONE);
+		BigDecimal costPerProduct = new BigDecimal(BigInteger.ONE);
+		BigDecimal fixedCost = new BigDecimal("2.99");
+		
+		DeliveryCostCalculator cc = new DeliveryCostCalculator(costPerDelivery, costPerProduct, fixedCost);
+		double result = cc.calculateFor(this);
+		
+		System.out.println(" Total Discount(Discount + Coupon)" + getTotalAmountAfterDiscount() + getTotalAmountCouponDiscount());
+		System.out.println(" Total Amount : " + getTotalAmount());
+		System.out.println(" Total DeliveryCost : " + result);
+
 	}
 
 }
