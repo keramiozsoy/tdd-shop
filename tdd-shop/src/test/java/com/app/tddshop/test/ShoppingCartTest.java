@@ -244,9 +244,11 @@ public class ShoppingCartTest {
 	}
 	
 	
-	// bir kategoride 3 ten fazla ürün aldığından indirim uygula
+	/**
+	 * Sepete bir kategoride 3 ten fazla eklenmiş ise  %20 indirim uygulanır
+	 */
 	@Test
-	public void t20() {
+	public void t20_when_adding_greater_than_three_prouduct_should_return_twenty_percent_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
 		shoppingCart.add(product);
@@ -268,9 +270,9 @@ public class ShoppingCartTest {
 		
 		Map<Category, Integer> resultFrequenciesForGreaterThanThree = shoppingCart.countFrequencies(cartList);
 		
-		shoppingCart.hasCategoryCountMoreThanThreeInFrequencies(resultFrequenciesForGreaterThanThree); 
+		Map<Category, Integer> resultOnlyFrequenciesForGreaterThanThree = shoppingCart.hasCategoryCountGreaterThanThreeInFrequencies(resultFrequenciesForGreaterThanThree); 
 		
-		System.out.println("adsf");
+		Assert.assertFalse("Bir kategoride 3 ten fazla ürün bulunamadığından %20 indirim kampanyası uygulanamadı", resultOnlyFrequenciesForGreaterThanThree.isEmpty());
 		
 	}
 

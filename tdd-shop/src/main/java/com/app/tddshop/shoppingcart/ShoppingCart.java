@@ -92,7 +92,7 @@ public class ShoppingCart {
 	}
 	
 	
-	public Map<Category, Integer> hasCategoryCountMoreThanThreeInFrequencies(Map<Category, Integer> resultFrequencies){
+	public Map<Category, Integer> hasCategoryCountGreaterThanThreeInFrequencies(Map<Category, Integer> resultFrequencies){
 		Map<Category, Integer> resultList = new HashMap<>();
 		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
 			Integer frequency = resultFrequencies.get(item.getKey());
