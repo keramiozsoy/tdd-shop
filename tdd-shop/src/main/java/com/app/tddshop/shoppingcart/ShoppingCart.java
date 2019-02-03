@@ -22,9 +22,11 @@ public class ShoppingCart {
 		return cartList.size();
 	}
 
-	public void add(Product product) {
+	public void add(Product product, int count) {
 		if (checkRequiredPriceInfoForAddingProduct(product) && checkRequiredCategoryInfoForAddingProduct(product)) {
-			cartList.add(product);
+			for (int i = 0; i < count; i++) {
+				cartList.add(product);
+			}
 		}
 
 	}
@@ -70,34 +72,33 @@ public class ShoppingCart {
 		for (Product product : shoppingCartList) {
 			shoppingCartCategoryList.add(product.getCategory());
 		}
-		
-		
-		Map<Category, Integer> countMap = new HashMap<>();		
+
+		Map<Category, Integer> countMap = new HashMap<>();
 		for (Category category : shoppingCartCategoryList) {
 			countMap.put(category, Collections.frequency(shoppingCartCategoryList, category));
 		}
-		
+
 		return countMap;
 	}
-	
-	public boolean hasSameCategoryInFrequencies (Map<Category, Integer> resultFrequencies){
+
+	public boolean hasSameCategoryInFrequencies(Map<Category, Integer> resultFrequencies) {
 		boolean result = true;
 		for (Entry<Category, Integer> item : resultFrequencies.entrySet()) {
 			Integer frequency = resultFrequencies.get(item.getKey());
 			if (frequency.intValue() < 2) {
-				result=false;
+				result = false;
 			}
 		}
 		return result;
 	}
-	
-	
-	public Map<Category, Integer> hasCategoryCountGreaterThanThreeInFrequencies(Map<Category, Integer> resultFrequenciesForGreaterThanThree){
+
+	public Map<Category, Integer> hasCategoryCountGreaterThanThreeInFrequencies(
+			Map<Category, Integer> resultFrequenciesForGreaterThanThree) {
 		Map<Category, Integer> resultList = new HashMap<>();
 		for (Entry<Category, Integer> item : resultFrequenciesForGreaterThanThree.entrySet()) {
 			Integer frequency = resultFrequenciesForGreaterThanThree.get(item.getKey());
-			if(frequency > 3) {
-				resultList.put(item.getKey(),item.getValue());
+			if (frequency > 3) {
+				resultList.put(item.getKey(), item.getValue());
 			}
 		}
 		return resultList;
@@ -107,8 +108,8 @@ public class ShoppingCart {
 		Map<Category, Integer> resultList = new HashMap<>();
 		for (Entry<Category, Integer> item : resultFrequenciesForGreaterThanFive.entrySet()) {
 			Integer frequency = resultFrequenciesForGreaterThanFive.get(item.getKey());
-			if(frequency > 5) {
-				resultList.put(item.getKey(),item.getValue());
+			if (frequency > 5) {
+				resultList.put(item.getKey(), item.getValue());
 			}
 		}
 		return resultList;

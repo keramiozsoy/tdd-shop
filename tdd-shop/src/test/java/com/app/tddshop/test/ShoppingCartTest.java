@@ -52,7 +52,7 @@ public class ShoppingCartTest {
 	public void t2_list_size_after_adding_one_product() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertEquals("Listenin büyüklüğü bir değildir.", 1, shoppingCart.size());
 	}
 
@@ -63,8 +63,8 @@ public class ShoppingCartTest {
 		product2.setCategory(category2);
 		product.setPrice(productPrice);
 		product2.setPrice(productPrice2);
-		shoppingCart.add(product);
-		shoppingCart.add(product2);
+		shoppingCart.add(product,1);
+		shoppingCart.add(product2,1);
 		Assert.assertEquals("Listenin büyüklüğü iki değildir.", 2, shoppingCart.size());
 	}
 
@@ -82,7 +82,7 @@ public class ShoppingCartTest {
 	public void t5_cart_list_after_adding_one_product() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertEquals("Liste bir eleman dönmedi", 1, cartList.size());
 	}
 
@@ -96,8 +96,8 @@ public class ShoppingCartTest {
 		product2.setCategory(category2);
 		product.setPrice(productPrice);
 		product2.setPrice(productPrice2);
-		shoppingCart.add(product);
-		shoppingCart.add(product2);
+		shoppingCart.add(product,1);
+		shoppingCart.add(product2,1);
 		Assert.assertEquals("Liste iki eleman dönmedi", 2, cartList.size());
 	}
 
@@ -115,7 +115,7 @@ public class ShoppingCartTest {
 	public void t8_when_adding_one_product_then_return_total_amount() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertEquals("Toplam tutar ürün fiyatından farklıdır.", product.getPrice(), shoppingCart.getTotalAmount(), 0);
 	}
 
@@ -132,8 +132,8 @@ public class ShoppingCartTest {
 
 		Double expectedSum = product.getPrice() + product2.getPrice();
 
-		shoppingCart.add(product);
-		shoppingCart.add(product2);
+		shoppingCart.add(product,1);
+		shoppingCart.add(product2,1);
 
 		Assert.assertEquals("Toplam tutar iki ürünün toplam fiyatından farklıdır", expectedSum, shoppingCart.getTotalAmount(), 0);
 	}
@@ -156,7 +156,7 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t12_when_product_has_not_price_should_empty_shopping_cart() {
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertNotEquals("Fiyatı olmayan ürün sepete eklenemez", Boolean.TRUE,
 				shoppingCart.checkRequiredPriceInfoForAddingProduct(product));
 	}
@@ -180,7 +180,7 @@ public class ShoppingCartTest {
 	 */
 	@Test
 	public void t15_when_product_has_not_category_should_empty_shopping_cart() {
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertNotEquals("Kategorisi olmayan ürün sepete eklenemez", Boolean.TRUE,
 				shoppingCart.checkRequiredCategoryInfoForAddingProduct(product));
 	}
@@ -193,8 +193,8 @@ public class ShoppingCartTest {
 	public void t16_when_adding_two_same_product_should_frequency_two() {
 		product.setCategory(category);
 		product.setPrice(productPrice);
-		shoppingCart.add(product);
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
+		shoppingCart.add(product,1);
 
 		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
 
@@ -213,8 +213,8 @@ public class ShoppingCartTest {
 		product.setPrice(productPrice);
 		product2.setCategory(category2);
 		product2.setPrice(productPrice2);
-		shoppingCart.add(product);
-		shoppingCart.add(product2);
+		shoppingCart.add(product,1);
+		shoppingCart.add(product2,1);
 
 		Map<Category, Integer> resultFrequencies = shoppingCart.countFrequencies(cartList);
 
@@ -238,7 +238,7 @@ public class ShoppingCartTest {
 	@Test
 	public void t19_when_adding_one_product_should_zero_total_amount_after_discount() {
 		product.setPrice(productPrice);
-		shoppingCart.add(product);
+		shoppingCart.add(product,1);
 		Assert.assertEquals("Sepetin indirimli tutarı sıfırdan farklıdır.", zeroPrice.doubleValue(),
 				shoppingCart.getTotalAmountAfterDiscount(), 0);
 	}
@@ -251,26 +251,11 @@ public class ShoppingCartTest {
 	public void t20_when_adding_greater_than_three_prouduct_should_return_twenty_percent_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
+		shoppingCart.add(product,4);
 		
 		product2.setPrice(productPrice2);
 		product2.setCategory(category2);
-		shoppingCart.add(product2);
+		shoppingCart.add(product2,1);
 		
 		Map<Category, Integer> resultFrequenciesForGreaterThanThree = shoppingCart.countFrequencies(cartList);
 		
@@ -287,36 +272,11 @@ public class ShoppingCartTest {
 	public void t20_when_adding_greater_than_five_prouduct_should_return_fifty_percent_campaign_dicount() {
 		product.setPrice(productPrice);
 		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
-		
-		product = new Product();
-		product.setPrice(productPrice);
-		product.setCategory(category);
-		shoppingCart.add(product);
+		shoppingCart.add(product,6);
 		
 		product2.setPrice(productPrice2);
 		product2.setCategory(category2);
-		shoppingCart.add(product2);
+		shoppingCart.add(product2,2);
 		
 		Map<Category, Integer> resultFrequenciesForGreaterThanFive = shoppingCart.countFrequencies(cartList);
 		
