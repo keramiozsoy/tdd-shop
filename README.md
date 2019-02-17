@@ -76,7 +76,7 @@ If cart has products that belong to two distinct categories, number of deliverie
 * double cart.getCampaignDiscount()
 * double cart.getDeliveryCost()
  
-# Discounts
+# Final
 
 * Group Products by Category and Print the CategoryName, ProductName, Quantity, Unit Price, Total Price, Total Discount(coupon,campaign) applied
 
