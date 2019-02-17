@@ -57,7 +57,7 @@ Implement a class that takes a cart and calculates the delivery cost.
 
 * Formula is ( CostPerDelivery * NumberOfDeliveries ) + (CostPerProduct * NumberOfProducts) + Fixed Cost
 * Fixed cost is 2.99 TL.
-*Implement a class that takes a cart and calculates the delivery cost.
+* Implement a class that takes a cart and calculates the delivery cost.
  
 #  Delivery Calculator
 
